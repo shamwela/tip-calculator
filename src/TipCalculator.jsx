@@ -3,17 +3,13 @@ import PercentInput from './PercentInput'
 import './TipCalculator.sass'
 
 export default class TipCalculator extends Component {
-  state = {
+  initialState = {
     bill: 100,
     tipPercent: 10,
-    people: 1,
+    people: 2,
   }
 
-  calculate = () => {}
-
-  componentDidMount() {
-    // this.handleChange()
-  }
+  state = { ...this.initialState }
 
   handleChange = (event) => {
     const state = { ...this.state }
@@ -35,13 +31,7 @@ export default class TipCalculator extends Component {
   }
 
   handleReset = () => {
-    this.setState({
-      bill: 1,
-      tipPercent: 5,
-      people: 1,
-      tip: 1,
-      total: 1,
-    })
+    this.setState({ ...this.initialState })
   }
 
   render() {
@@ -67,7 +57,11 @@ export default class TipCalculator extends Component {
               <label htmlFor=''>Select Tip %</label>
               <section id='percent-input-section'>
                 {[5, 10, 15, 25, 50].map((value) => (
-                  <PercentInput key={value} value={value} />
+                  <PercentInput
+                    key={value}
+                    value={value}
+                    onClick={handleChange}
+                  />
                 ))}
                 <input
                   value={tipPercent}
