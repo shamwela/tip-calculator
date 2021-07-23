@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PercentInput from './PercentInput'
 import './TipCalculator.sass'
 
 export default class TipCalculator extends Component {
@@ -10,15 +11,20 @@ export default class TipCalculator extends Component {
           <section id='input-section'>
             <section id='bill'>
               <label htmlFor=''>Bill</label>
-              <input type='number' />
+              <input type='number' min='1' />
             </section>
             <section id='select-tip'>
               <label htmlFor=''>Select Tip %</label>
-              {/* 6 buttons will be here */}
+              <section id='percent-input-section'>
+                {[5, 10, 15, 25, 50].map((value) => (
+                  <PercentInput value={value} />
+                ))}
+                <input type='number' placeholder='Custom' />
+              </section>
             </section>
             <section id='people'>
               <label htmlFor=''>Number of People</label>
-              <input type='number' />
+              <input type='number' min='1' />
             </section>
           </section>
           <section id='output-section'>
@@ -36,7 +42,7 @@ export default class TipCalculator extends Component {
               </div>
               <div>$4.27</div>
             </section>
-            <button>RESET</button>
+            <button id='reset-button'>RESET</button>
           </section>
         </article>
       </main>
