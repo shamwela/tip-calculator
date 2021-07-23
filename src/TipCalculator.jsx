@@ -3,7 +3,51 @@ import PercentInput from './PercentInput'
 import './TipCalculator.sass'
 
 export default class TipCalculator extends Component {
+  state = {
+    bill: 100,
+    tipPercent: 10,
+    people: 1,
+  }
+
+  calculate = () => {}
+
+  componentDidMount() {
+    // this.handleChange()
+  }
+
+  handleChange = (event) => {
+    const state = { ...this.state }
+    const { name, value } = event.currentTarget
+    state[name] = value
+
+    const { bill, tipPercent, people } = state
+
+    // console.log('tipPercent', tipPercent)
+    const tipPercentFloat = tipPercent / 100
+    // console.log('tipPercentFloat', tipPercentFloat)
+    const tip = bill * tipPercentFloat
+    const tipPerPerson = (tip / people).toFixed(2)
+
+    const total = bill + tip
+    const totalPerPerson = (total / people).toFixed(2)
+
+    this.setState({ [name]: value, tip: tipPerPerson, total: totalPerPerson })
+  }
+
+  handleReset = () => {
+    this.setState({
+      bill: 1,
+      tipPercent: 5,
+      people: 1,
+      tip: 1,
+      total: 1,
+    })
+  }
+
   render() {
+    const { handleChange, handleReset } = this
+    const { bill, tipPercent, people, tip, total } = this.state
+
     return (
       <main>
         <img id='logo' src='./logo.svg' alt='Logo' />
@@ -11,30 +55,47 @@ export default class TipCalculator extends Component {
           <section id='input-section'>
             <section id='bill'>
               <label htmlFor=''>Bill</label>
-              <input type='number' min='1' />
+              <input
+                value={bill}
+                name='bill'
+                onChange={handleChange}
+                type='number'
+                min='1'
+              />
             </section>
             <section id='select-tip'>
               <label htmlFor=''>Select Tip %</label>
               <section id='percent-input-section'>
                 {[5, 10, 15, 25, 50].map((value) => (
-                  <PercentInput value={value} />
+                  <PercentInput key={value} value={value} />
                 ))}
-                <input type='number' placeholder='Custom' />
+                <input
+                  value={tipPercent}
+                  name='tipPercent'
+                  onChange={handleChange}
+                  type='number'
+                  placeholder='Custom'
+                />
               </section>
             </section>
             <section id='people'>
               <label htmlFor=''>Number of People</label>
-              <input type='number' min='1' />
+              <input
+                value={people}
+                name='people'
+                onChange={handleChange}
+                type='number'
+                min='1'
+              />
             </section>
           </section>
           <section id='output-section'>
-
             <section className='output'>
               <div>
                 Tip Amount
                 <br />/ person
               </div>
-              <div className='output-value'>$4.27</div>
+              <div className='output-value'>${tip}</div>
             </section>
 
             <section className='output'>
@@ -42,10 +103,12 @@ export default class TipCalculator extends Component {
                 Total
                 <br />/ person
               </div>
-              <div className='output-value'>$4.27</div>
+              <div className='output-value'>${total}</div>
             </section>
-            
-            <button id='reset-button'>RESET</button>
+
+            <button onClick={handleReset} id='reset-button'>
+              RESET
+            </button>
           </section>
         </article>
       </main>
