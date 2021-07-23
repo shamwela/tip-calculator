@@ -28,20 +28,23 @@ export default class TipCalculator extends Component {
             </section>
           </section>
           <section id='output-section'>
-            <section>
+
+            <section className='output'>
               <div>
                 Tip Amount
                 <br />/ person
               </div>
-              <div>$4.27</div>
+              <div className='output-value'>$4.27</div>
             </section>
-            <section>
+
+            <section className='output'>
               <div>
                 Total
                 <br />/ person
               </div>
-              <div>$4.27</div>
+              <div className='output-value'>$4.27</div>
             </section>
+            
             <button id='reset-button'>RESET</button>
           </section>
         </article>

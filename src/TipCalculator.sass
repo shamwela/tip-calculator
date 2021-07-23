@@ -45,6 +45,7 @@ input
 
 button
   border: 0
+  padding: 0.5rem
   background-color: $darkest-cyan
   color: $white
 
@@ -55,9 +56,24 @@ button
   grid-gap: 1rem
 
 #output-section
-  background-color: black
+  background-color: $darkest-cyan
   border-radius: 1rem
   padding: 1rem
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+
+.output
+  display: flex
+  justify-content: space-between
+
+.output > *
+  color: $white
+
+.output-value
+  font-size: 2rem
+  font-weight: 700
+  color: $strong-cyan
 
 #reset-button
   width: 100%
