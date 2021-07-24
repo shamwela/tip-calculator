@@ -14,11 +14,6 @@ export default function TipCalculator() {
   let [{ bill, tipPercent, people, tip, total }, setState] =
     useState(initialState)
 
-  // useEffect(() => {
-  //   // called only once when the component is mounted
-  //   calculate({ bill, tipPercent, people })
-  // }, [])
-
   const calculate = (state) => {
     const { bill, tipPercent, people } = state
 
@@ -52,18 +47,19 @@ export default function TipCalculator() {
       <img id='logo' src='./logo.svg' alt='Logo' />
       <article id='tip-calculator'>
         <section id='input-section'>
-          <section id='bill'>
-            <label htmlFor=''>Bill</label>
+          <section id='bill-section'>
+            <label htmlFor='bill'>Bill</label>
             <input
-              value={bill}
+              id='bill'
               name='bill'
+              value={bill}
               onChange={handleChange}
               type='number'
               min='1'
             />
           </section>
           <section id='select-tip'>
-            <label htmlFor=''>Select Tip %</label>
+            <label htmlFor='percent-input-section'>Select Tip %</label>
             <section id='percent-input-section'>
               {[5, 10, 15, 25, 50].map((value) => (
                 <PercentInput
@@ -81,11 +77,12 @@ export default function TipCalculator() {
               />
             </section>
           </section>
-          <section id='people'>
-            <label htmlFor=''>Number of People</label>
+          <section id='people-section'>
+            <label htmlFor='people'>Number of People</label>
             <input
-              value={people}
+              id='people'
               name='people'
+              value={people}
               onChange={handleChange}
               type='number'
               min='1'
