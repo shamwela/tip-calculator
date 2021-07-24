@@ -1,111 +1,119 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import PercentInput from './PercentInput'
 import './TipCalculator.sass'
 
-export default class TipCalculator extends Component {
-  initialState = {
-    bill: 100,
-    tipPercent: 10,
-    people: 2,
-  }
+const initialState = {
+  bill: 100,
+  tipPercent: 10,
+  people: 1,
+  tip: 10,
+  total: 110,
+}
 
-  state = { ...this.initialState }
+export default function TipCalculator() {
+  let [{ bill, tipPercent, people, tip, total }, setState] =
+    useState(initialState)
 
-  handleChange = (event) => {
-    const state = { ...this.state }
-    const { name, value } = event.currentTarget
-    state[name] = value
+  // useEffect(() => {
+  //   // called only once when the component is mounted
+  //   calculate({ bill, tipPercent, people })
+  // }, [])
 
+  const calculate = (state) => {
     const { bill, tipPercent, people } = state
 
-    // console.log('tipPercent', tipPercent)
     const tipPercentFloat = tipPercent / 100
-    // console.log('tipPercentFloat', tipPercentFloat)
     const tip = bill * tipPercentFloat
     const tipPerPerson = (tip / people).toFixed(2)
 
     const total = bill + tip
     const totalPerPerson = (total / people).toFixed(2)
 
-    this.setState({ [name]: value, tip: tipPerPerson, total: totalPerPerson })
+    setState({
+      ...state,
+      tip: tipPerPerson,
+      total: totalPerPerson,
+    })
   }
 
-  handleReset = () => {
-    this.setState({ ...this.initialState })
+  const handleChange = ({ currentTarget }) => {
+    let state = { bill, tipPercent, people }
+    const { name, value } = currentTarget
+    state[name] = value
+    calculate(state)
   }
 
-  render() {
-    const { handleChange, handleReset } = this
-    const { bill, tipPercent, people, tip, total } = this.state
+  const handleReset = () => {
+    setState({ ...initialState })
+  }
 
-    return (
-      <main>
-        <img id='logo' src='./logo.svg' alt='Logo' />
-        <article id='tip-calculator'>
-          <section id='input-section'>
-            <section id='bill'>
-              <label htmlFor=''>Bill</label>
-              <input
-                value={bill}
-                name='bill'
-                onChange={handleChange}
-                type='number'
-                min='1'
-              />
-            </section>
-            <section id='select-tip'>
-              <label htmlFor=''>Select Tip %</label>
-              <section id='percent-input-section'>
-                {[5, 10, 15, 25, 50].map((value) => (
-                  <PercentInput
-                    key={value}
-                    value={value}
-                    onClick={handleChange}
-                  />
-                ))}
-                <input
-                  value={tipPercent}
-                  name='tipPercent'
-                  onChange={handleChange}
-                  type='number'
-                  placeholder='Custom'
+  return (
+    <main>
+      <img id='logo' src='./logo.svg' alt='Logo' />
+      <article id='tip-calculator'>
+        <section id='input-section'>
+          <section id='bill'>
+            <label htmlFor=''>Bill</label>
+            <input
+              value={bill}
+              name='bill'
+              onChange={handleChange}
+              type='number'
+              min='1'
+            />
+          </section>
+          <section id='select-tip'>
+            <label htmlFor=''>Select Tip %</label>
+            <section id='percent-input-section'>
+              {[5, 10, 15, 25, 50].map((value) => (
+                <PercentInput
+                  key={value}
+                  value={value}
+                  onClick={handleChange}
                 />
-              </section>
-            </section>
-            <section id='people'>
-              <label htmlFor=''>Number of People</label>
+              ))}
               <input
-                value={people}
-                name='people'
+                value={tipPercent}
+                name='tipPercent'
                 onChange={handleChange}
                 type='number'
-                min='1'
+                placeholder='Custom'
               />
             </section>
           </section>
-          <section id='output-section'>
-            <section className='output'>
-              <div>
-                Tip Amount
-                <br />/ person
-              </div>
-              <div className='output-value'>${tip}</div>
-            </section>
-
-            <section className='output'>
-              <div>
-                Total
-                <br />/ person
-              </div>
-              <div className='output-value'>${total}</div>
-            </section>
-
-            <button onClick={handleReset} id='reset-button'>
-              RESET
-            </button>
+          <section id='people'>
+            <label htmlFor=''>Number of People</label>
+            <input
+              value={people}
+              name='people'
+              onChange={handleChange}
+              type='number'
+              min='1'
+            />
           </section>
-        </article>
-      </main>
-    )
-  }
+        </section>
+        <section id='output-section'>
+          <section className='output'>
+            <div>
+              Tip Amount
+              <br />/ person
+            </div>
+            <div className='output-value'>${tip}</div>
+          </section>
+
+          <section className='output'>
+            <div>
+              Total
+              <br />/ person
+            </div>
+            <div className='output-value'>${total}</div>
+          </section>
+
+          <button onClick={handleReset} id='reset-button'>
+            RESET
+          </button>
+        </section>
+      </article>
+    </main>
+  )
 }
