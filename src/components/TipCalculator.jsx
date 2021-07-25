@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PercentInput from './PercentInput'
-import './TipCalculator.sass'
+import '../styles/TipCalculator.sass'
 
 const initialState = {
   bill: 100,
