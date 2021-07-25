@@ -7,67 +7,71 @@ const initialValues = {
   tipPercent: 10,
   customTipPercent: '',
   people: 1,
-  tip: 10,
-  total: 110,
+  tipPerPerson: 10,
+  totalPerPerson: 110,
 }
 
 export default function TipCalculator() {
   const [
-    { bill, tipPercent, customTipPercent, people, tip, total },
+    {
+      bill,
+      tipPercent,
+      customTipPercent,
+      people,
+      tipPerPerson,
+      totalPerPerson,
+    },
     setValues,
   ] = useState(initialValues)
   const [errors, setErrors] = useState({})
 
-  const validate = ({ bill, customTipPercent, people }) => {
-    setErrors((errors) => {
-      bill <= 0
-        ? (errors.bill = 'Bill must be greater than 0')
-        : delete errors[bill]
-
-      customTipPercent && customTipPercent <= 0
-        ? (errors.customTipPercent =
-            'Custom tip percent must be greater than 0')
-        : delete errors[customTipPercent]
-
-      people <= 0
-        ? (errors.people = 'Number of people must be greater than 0')
-        : delete errors[people]
-
-      return errors
-    })
-
-    // If there are no errors, all inputs are valid
-    return Object.keys(errors).length === 0
+  const roundToTwoDecimals = (number) => {
+    // best accuracy for this calculation
+    return Math.round((number + Number.EPSILON) * 100) / 100
   }
 
-  useEffect(() => {
-    if (validate({ bill, customTipPercent, people })) {
-      calculate({ bill, tipPercent, customTipPercent, people })
-    }
-  }, [bill, tipPercent, customTipPercent, people])
+  const validate = () => {
+    const finalErrors = { ...errors }
 
-  const calculate = (values) => {
-    const { bill, tipPercent, customTipPercent, people } = values
+    bill <= 0
+      ? (finalErrors.bill = ' must be greater than 0')
+      : delete finalErrors.bill
 
+    customTipPercent && customTipPercent <= 0
+      ? (finalErrors.customTipPercent = ' must be greater than 0')
+      : delete finalErrors.customTipPercent
+
+    people <= 0
+      ? (finalErrors.people = ' must be greater than 0')
+      : delete finalErrors.people
+
+    setErrors(finalErrors)
+
+    // If there are no errors, all inputs are valid
+    return Object.keys(finalErrors).length === 0
+  }
+
+  const calculate = () => {
     let tipPercentFloat
     if (customTipPercent) {
       tipPercentFloat = customTipPercent / 100
     } else {
       tipPercentFloat = tipPercent / 100
     }
-    console.log('tipPercentFloat', tipPercentFloat)
-    const tip = bill * tipPercentFloat
-    console.log('tip', tip)
-    const tipPerPerson = (tip / people).toFixed(2)
-    console.log('tipPerPerson', tipPerPerson)
+    const totalTip = bill * tipPercentFloat
+    const tipPerPerson = roundToTwoDecimals(totalTip / people)
 
-    const total = bill + tip
-    const totalPerPerson = (total / people).toFixed(2)
+    const total = bill + totalTip
+    const totalPerPerson = roundToTwoDecimals(total / people)
 
     setValues((currentValues) => {
-      return { tip: tipPerPerson, total: totalPerPerson, ...currentValues }
+      return { tipPerPerson, totalPerPerson, ...currentValues }
     })
   }
+
+  useEffect(() => {
+    if (validate()) calculate()
+  }, [bill, tipPercent, customTipPercent, people])
 
   const handleChange = ({ currentTarget }) => {
     const values = { bill, tipPercent, customTipPercent, people }
@@ -89,7 +93,7 @@ export default function TipCalculator() {
         <section id='input-section'>
           <section id='bill-section'>
             <label htmlFor='bill'>Bill</label>
-            {errors.bill && <p>{errors.bill}</p>}
+            {errors.bill && <span>{errors.bill}</span>}
             <input
               id='bill'
               name='bill'
@@ -118,11 +122,14 @@ export default function TipCalculator() {
                 type='number'
                 placeholder='Custom'
               />
+              {errors.customTipPercent && (
+                <span>{errors.customTipPercent}</span>
+              )}
             </section>
           </section>
           <section id='people-section'>
             <label htmlFor='people'>Number of People</label>
-            {errors.people && <p>{errors.people}</p>}
+            {errors.people && <span>{errors.people}</span>}
             <input
               id='people'
               name='people'
@@ -140,7 +147,7 @@ export default function TipCalculator() {
               Tip Amount
               <br />/ person
             </div>
-            <div className='output-value'>${tip}</div>
+            <div className='output-value'>${tipPerPerson}</div>
           </section>
 
           <section className='output'>
@@ -148,7 +155,7 @@ export default function TipCalculator() {
               Total
               <br />/ person
             </div>
-            <div className='output-value'>${total}</div>
+            <div className='output-value'>${totalPerPerson}</div>
           </section>
 
           <button onClick={handleReset} id='reset-button'>
