@@ -2,51 +2,84 @@ import React, { useState, useEffect } from 'react'
 import PercentInput from './PercentInput'
 import '../styles/TipCalculator.sass'
 
-const initialState = {
+const initialValues = {
   bill: 100,
   tipPercent: 10,
+  customTipPercent: '',
   people: 1,
   tip: 10,
   total: 110,
 }
 
 export default function TipCalculator() {
-  let [{ bill, tipPercent, people, tip, total }, setState] =
-    useState(initialState)
+  const [
+    { bill, tipPercent, customTipPercent, people, tip, total },
+    setValues,
+  ] = useState(initialValues)
+  const [errors, setErrors] = useState({})
 
-  // const validate = ({ bill, tipPercent, people }) => {
-  //   if(bill <= 0) {
-  //     setState((prevState)=> {...prevState, bill: 'Invalid'})
-  //   }
-  // }
+  const validate = ({ bill, customTipPercent, people }) => {
+    setErrors((errors) => {
+      bill <= 0
+        ? (errors.bill = 'Bill must be greater than 0')
+        : delete errors[bill]
 
-  const calculate = (state) => {
-    const { bill, tipPercent, people } = state
+      customTipPercent && customTipPercent <= 0
+        ? (errors.customTipPercent =
+            'Custom tip percent must be greater than 0')
+        : delete errors[customTipPercent]
 
-    const tipPercentFloat = tipPercent / 100
+      people <= 0
+        ? (errors.people = 'Number of people must be greater than 0')
+        : delete errors[people]
+
+      return errors
+    })
+
+    // If there are no errors, all inputs are valid
+    return Object.keys(errors).length === 0
+  }
+
+  useEffect(() => {
+    if (validate({ bill, customTipPercent, people })) {
+      calculate({ bill, tipPercent, customTipPercent, people })
+    }
+  }, [bill, tipPercent, customTipPercent, people])
+
+  const calculate = (values) => {
+    const { bill, tipPercent, customTipPercent, people } = values
+
+    let tipPercentFloat
+    if (customTipPercent) {
+      tipPercentFloat = customTipPercent / 100
+    } else {
+      tipPercentFloat = tipPercent / 100
+    }
+    console.log('tipPercentFloat', tipPercentFloat)
     const tip = bill * tipPercentFloat
+    console.log('tip', tip)
     const tipPerPerson = (tip / people).toFixed(2)
+    console.log('tipPerPerson', tipPerPerson)
 
     const total = bill + tip
     const totalPerPerson = (total / people).toFixed(2)
 
-    setState({
-      ...state,
-      tip: tipPerPerson,
-      total: totalPerPerson,
+    setValues((currentValues) => {
+      return { tip: tipPerPerson, total: totalPerPerson, ...currentValues }
     })
   }
 
   const handleChange = ({ currentTarget }) => {
-    let state = { bill, tipPercent, people }
+    const values = { bill, tipPercent, customTipPercent, people }
     const { name, value } = currentTarget
-    state[name] = value
-    // if (validate(state))
-    calculate(state)
+
+    values[name] = value
+
+    setValues(values)
   }
 
   const handleReset = () => {
-    setState({ ...initialState })
+    setValues({ ...initialValues })
   }
 
   return (
@@ -56,6 +89,7 @@ export default function TipCalculator() {
         <section id='input-section'>
           <section id='bill-section'>
             <label htmlFor='bill'>Bill</label>
+            {errors.bill && <p>{errors.bill}</p>}
             <input
               id='bill'
               name='bill'
@@ -63,10 +97,12 @@ export default function TipCalculator() {
               onChange={handleChange}
               type='number'
               min='1'
+              required
             />
           </section>
           <section id='select-tip'>
             <label htmlFor='percent-input-section'>Select Tip %</label>
+            {errors.customTipPercent && <p>{errors.customTipPercent}</p>}
             <section id='percent-input-section'>
               {[5, 10, 15, 25, 50].map((value) => (
                 <PercentInput
@@ -76,8 +112,8 @@ export default function TipCalculator() {
                 />
               ))}
               <input
-                value={tipPercent}
-                name='tipPercent'
+                name='customTipPercent'
+                value={customTipPercent}
                 onChange={handleChange}
                 type='number'
                 placeholder='Custom'
@@ -86,6 +122,7 @@ export default function TipCalculator() {
           </section>
           <section id='people-section'>
             <label htmlFor='people'>Number of People</label>
+            {errors.people && <p>{errors.people}</p>}
             <input
               id='people'
               name='people'
@@ -93,6 +130,7 @@ export default function TipCalculator() {
               onChange={handleChange}
               type='number'
               min='1'
+              required
             />
           </section>
         </section>
