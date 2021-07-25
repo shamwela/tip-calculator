@@ -14,6 +14,12 @@ export default function TipCalculator() {
   let [{ bill, tipPercent, people, tip, total }, setState] =
     useState(initialState)
 
+  // const validate = ({ bill, tipPercent, people }) => {
+  //   if(bill <= 0) {
+  //     setState((prevState)=> {...prevState, bill: 'Invalid'})
+  //   }
+  // }
+
   const calculate = (state) => {
     const { bill, tipPercent, people } = state
 
@@ -35,6 +41,7 @@ export default function TipCalculator() {
     let state = { bill, tipPercent, people }
     const { name, value } = currentTarget
     state[name] = value
+    // if (validate(state))
     calculate(state)
   }
 
