@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export default function PercentInput({ value, onClick }) {
   return (
@@ -6,4 +7,9 @@ export default function PercentInput({ value, onClick }) {
       {value}%
     </button>
   )
+}
+
+PercentInput.propTypes = {
+  value: PropTypes.number.isRequired,
+  onClick: PropTypes.func.isRequired,
 }
