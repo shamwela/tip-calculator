@@ -12,16 +12,15 @@ main
 
 #tip-calculator
   background-color: $white
-  width: 100%
   border-radius: 1rem
   display: grid
   grid-template: 2fr 1fr / 1fr
   padding: 1.5rem 2rem
 
 #input-section
-  width: 100%
   display: grid
   grid-template: 1fr 3fr 1fr / 1fr
+  grid-row-gap: 10px
 
 label
   font-weight: 700
@@ -50,7 +49,6 @@ button
   color: $white
 
 #percent-input-section
-  height: 80%
   display: grid
   grid-template: repeat(3, 1fr) / repeat(2, 1fr)
   grid-gap: 1rem
@@ -79,3 +77,17 @@ button
   width: 100%
   background-color: $strong-cyan
   color: $darkest-cyan
+
+@media #{$mq-1440-up}
+  input,
+  button
+    font-size: 1.2rem
+
+  #tip-calculator
+    margin: auto
+    width: 50%
+    grid-template: 1fr / repeat(2, 1fr)
+    grid-column-gap: 2.5rem
+
+  #percent-input-section
+    grid-template: repeat(2, 1fr) / repeat(3, 1fr)

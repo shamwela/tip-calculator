@@ -7,8 +7,8 @@ const initialValues = {
   tipPercent: 10,
   customTipPercent: '',
   people: 1,
-  tipPerPerson: 10,
-  totalPerPerson: 110,
+  tipPerPerson: null,
+  totalPerPerson: null,
 }
 
 export default function TipCalculator() {
@@ -106,7 +106,7 @@ export default function TipCalculator() {
           </section>
           <section id='select-tip'>
             <label htmlFor='percent-input-section'>Select Tip %</label>
-            {errors.customTipPercent && <p>{errors.customTipPercent}</p>}
+            {errors.customTipPercent && <span>{errors.customTipPercent}</span>}
             <section id='percent-input-section'>
               {[5, 10, 15, 25, 50].map((value) => (
                 <PercentInput
@@ -122,9 +122,6 @@ export default function TipCalculator() {
                 type='number'
                 placeholder='Custom'
               />
-              {errors.customTipPercent && (
-                <span>{errors.customTipPercent}</span>
-              )}
             </section>
           </section>
           <section id='people-section'>
