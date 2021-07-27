@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.sass'
 import TipCalculator from './components/TipCalculator'
 import reportWebVitals from './reportWebVitals'
 

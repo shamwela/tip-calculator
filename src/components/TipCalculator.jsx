@@ -88,76 +88,80 @@ export default function TipCalculator() {
 
   return (
     <main>
-      <img id='logo' src='./logo.svg' alt='Logo' />
-      <article id='tip-calculator'>
-        <section id='input-section'>
-          <section id='bill-section'>
-            <label htmlFor='bill'>Bill</label>
-            {errors.bill && <span>{errors.bill}</span>}
-            <input
-              id='bill'
-              name='bill'
-              value={bill}
-              onChange={handleChange}
-              type='number'
-              min='1'
-              required
-            />
-          </section>
-          <section id='select-tip'>
-            <label htmlFor='percent-input-section'>Select Tip %</label>
-            {errors.customTipPercent && <span>{errors.customTipPercent}</span>}
-            <section id='percent-input-section'>
-              {[5, 10, 15, 25, 50].map((value) => (
-                <PercentInput
-                  key={value}
-                  value={value}
-                  onClick={handleChange}
-                />
-              ))}
+      <article id='container'>
+        <section id='logo-section'>
+          <img id='logo' src='./logo.svg' alt='Logo' />
+        </section>
+        <section id='tip-calculator'>
+          <section id='input-section'>
+            <section id='bill-section'>
+              <label htmlFor='bill'>Bill</label>
+              {errors.bill && <span>{errors.bill}</span>}
               <input
-                name='customTipPercent'
-                value={customTipPercent}
+                id='bill'
+                name='bill'
+                value={bill}
                 onChange={handleChange}
                 type='number'
-                placeholder='Custom'
+                min='1'
+                required
+              />
+            </section>
+            <section id='select-tip'>
+              <label htmlFor='percent-input-section'>Select Tip %</label>
+              {errors.customTipPercent && (
+                <span>{errors.customTipPercent}</span>
+              )}
+              <section id='percent-input-section'>
+                {[5, 10, 15, 25, 50].map((value) => (
+                  <PercentInput
+                    key={value}
+                    value={value}
+                    onClick={handleChange}
+                  />
+                ))}
+                <input
+                  name='customTipPercent'
+                  value={customTipPercent}
+                  onChange={handleChange}
+                  type='number'
+                  placeholder='Custom'
+                />
+              </section>
+            </section>
+            <section id='people-section'>
+              <label htmlFor='people'>Number of People</label>
+              {errors.people && <span>{errors.people}</span>}
+              <input
+                id='people'
+                name='people'
+                value={people}
+                onChange={handleChange}
+                type='number'
+                min='1'
+                required
               />
             </section>
           </section>
-          <section id='people-section'>
-            <label htmlFor='people'>Number of People</label>
-            {errors.people && <span>{errors.people}</span>}
-            <input
-              id='people'
-              name='people'
-              value={people}
-              onChange={handleChange}
-              type='number'
-              min='1'
-              required
-            />
+          <section id='output-section'>
+            <section className='output'>
+              <div>
+                Tip Amount
+                <br />/ person
+              </div>
+              <div className='output-value'>${tipPerPerson}</div>
+            </section>
+            <section className='output'>
+              <div>
+                Total
+                <br />/ person
+              </div>
+              <div className='output-value'>${totalPerPerson}</div>
+            </section>
+            <button onClick={handleReset} id='reset-button'>
+              RESET
+            </button>
           </section>
-        </section>
-        <section id='output-section'>
-          <section className='output'>
-            <div>
-              Tip Amount
-              <br />/ person
-            </div>
-            <div className='output-value'>${tipPerPerson}</div>
-          </section>
-
-          <section className='output'>
-            <div>
-              Total
-              <br />/ person
-            </div>
-            <div className='output-value'>${totalPerPerson}</div>
-          </section>
-
-          <button onClick={handleReset} id='reset-button'>
-            RESET
-          </button>
         </section>
       </article>
     </main>
