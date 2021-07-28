@@ -1,9 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styles from '../styles/PercentInput.module.sass'
 
-export default function PercentInput({ value, onClick }) {
+export default function PercentInput({ value, onClick, selectedTipPercent }) {
   return (
-    <button name={'tipPercent'} value={value} onClick={onClick}>
+    <button
+      name={'tipPercent'}
+      value={value}
+      onClick={onClick}
+      className={selectedTipPercent === value ? styles.selected : null}
+    >
       {value}%
     </button>
   )

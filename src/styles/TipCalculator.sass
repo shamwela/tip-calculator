@@ -66,8 +66,11 @@ button
   padding: 0.5rem
   background-color: $darkest-cyan
   color: $white
-  &:focus
+  &:hover
     background-color: $light-cyan
+    color: $darkest-cyan
+  &:focus
+    background-color: $strong-cyan
     color: $darkest-cyan
 
 #percent-input-section
@@ -99,9 +102,9 @@ button
   width: 100%
   background-color: $strong-cyan
   color: $darkest-cyan
-  &:hover
-    background-color: $light-cyan
-    color: $darkest-cyan
+  &:disabled
+    background-color: $darker-cyan
+    color: $dark-cyan
 
 @media #{$mq-1440-up}
   main

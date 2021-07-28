@@ -4,10 +4,10 @@ import Error from './Error'
 import '../styles/TipCalculator.sass'
 
 const initialValues = {
-  bill: -100,
-  tipPercent: 10,
+  bill: undefined,
+  tipPercent: undefined,
   customTipPercent: undefined,
-  people: 1,
+  people: undefined,
   tipPerPerson: undefined,
   totalPerPerson: undefined,
 }
@@ -43,7 +43,7 @@ export default function TipCalculator() {
       }
     }
     // If the number of people is not an integer
-    if (!Number.isInteger(people)) {
+    if (people && !Number.isInteger(people)) {
       finalErrors.people = ' should be a positive integer'
     }
 
@@ -56,6 +56,9 @@ export default function TipCalculator() {
   const calculate = () => {
     let tipPercentFloat
     if (customTipPercent) {
+      setValues((previousValues) => {
+        return { tipPercent: undefined, ...previousValues }
+      })
       tipPercentFloat = customTipPercent / 100
     } else {
       tipPercentFloat = tipPercent / 100
@@ -66,9 +69,11 @@ export default function TipCalculator() {
     const total = bill + totalTip
     const totalPerPerson = roundToTwoDecimals(total / people)
 
-    setValues((currentValues) => {
-      return { tipPerPerson, totalPerPerson, ...currentValues }
-    })
+    if (tipPerPerson && totalPerPerson) {
+      setValues((previousValues) => {
+        return { tipPerPerson, totalPerPerson, ...previousValues }
+      })
+    }
   }
 
   useEffect(() => {
@@ -89,6 +94,11 @@ export default function TipCalculator() {
     setValues({ ...initialValues })
   }
 
+  const areInputsEmpty = () => {
+    const inputs = [bill, tipPercent, customTipPercent, people]
+    return inputs.every((input) => (input ? false : true))
+  }
+
   return (
     <main>
       <article id='container'>
@@ -107,6 +117,7 @@ export default function TipCalculator() {
                 onChange={handleChange}
                 className={errors.bill ? 'input-error' : ''}
                 type='number'
+                placeholder='0'
                 min='1'
                 required
               />
@@ -122,14 +133,17 @@ export default function TipCalculator() {
                     key={value}
                     value={value}
                     onClick={handleChange}
+                    selectedTipPercent={tipPercent}
                   />
                 ))}
                 <input
                   name='customTipPercent'
                   value={customTipPercent}
                   onChange={handleChange}
+                  className={errors.customTipPercent ? 'input-error' : ''}
                   type='number'
                   placeholder='Custom'
+                  min='0.1'
                 />
               </section>
             </section>
@@ -141,7 +155,9 @@ export default function TipCalculator() {
                 name='people'
                 value={people}
                 onChange={handleChange}
+                className={errors.people ? 'input-error' : ''}
                 type='number'
+                placeholder='0'
                 min='1'
                 required
               />
@@ -162,7 +178,11 @@ export default function TipCalculator() {
               </div>
               <div className='output-value'>${totalPerPerson}</div>
             </section>
-            <button onClick={handleReset} id='reset-button'>
+            <button
+              onClick={handleReset}
+              disabled={areInputsEmpty()}
+              id='reset-button'
+            >
               RESET
             </button>
           </section>
