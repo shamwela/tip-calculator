@@ -56,9 +56,6 @@ export default function TipCalculator() {
   const calculate = () => {
     let tipPercentFloat
     if (customTipPercent) {
-      setValues((previousValues) => {
-        return { tipPercent: undefined, ...previousValues }
-      })
       tipPercentFloat = customTipPercent / 100
     } else {
       tipPercentFloat = tipPercent / 100
