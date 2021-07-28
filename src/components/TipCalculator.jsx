@@ -4,10 +4,10 @@ import Error from './Error'
 import '../styles/TipCalculator.sass'
 
 const initialValues = {
-  bill: undefined,
+  bill: 100,
   tipPercent: undefined,
-  customTipPercent: undefined,
-  people: undefined,
+  customTipPercent: 55,
+  people: 1,
   tipPerPerson: undefined,
   totalPerPerson: undefined,
 }
@@ -43,7 +43,7 @@ export default function TipCalculator() {
       }
     }
     // If the number of people is not an integer
-    if (people && !Number.isInteger(people)) {
+    if (people !== '' && !Number.isInteger(people)) {
       finalErrors.people = ' should be a positive integer'
     }
 
