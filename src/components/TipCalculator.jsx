@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import PercentInput from './PercentInput'
+import Error from './Error'
 import '../styles/TipCalculator.sass'
 
 const initialValues = {
-  bill: 100,
+  bill: -100,
   tipPercent: 10,
-  customTipPercent: '',
+  customTipPercent: undefined,
   people: 1,
-  tipPerPerson: null,
-  totalPerPerson: null,
+  tipPerPerson: undefined,
+  totalPerPerson: undefined,
 }
 
 export default function TipCalculator() {
@@ -32,18 +33,19 @@ export default function TipCalculator() {
 
   const validate = () => {
     const finalErrors = { ...errors }
+    const inputsToValidate = { bill, customTipPercent, people }
 
-    bill <= 0
-      ? (finalErrors.bill = ' must be greater than 0')
-      : delete finalErrors.bill
-
-    customTipPercent && customTipPercent <= 0
-      ? (finalErrors.customTipPercent = ' must be greater than 0')
-      : delete finalErrors.customTipPercent
-
-    people <= 0
-      ? (finalErrors.people = ' must be greater than 0')
-      : delete finalErrors.people
+    for (const [key, value] of Object.entries(inputsToValidate)) {
+      if (value <= 0) {
+        finalErrors[key] = ' should be a positive number'
+      } else {
+        delete finalErrors[key]
+      }
+    }
+    // If the number of people is not an integer
+    if (!Number.isInteger(people)) {
+      finalErrors.people = ' should be a positive integer'
+    }
 
     setErrors(finalErrors)
 
@@ -76,8 +78,9 @@ export default function TipCalculator() {
   const handleChange = ({ currentTarget }) => {
     const values = { bill, tipPercent, customTipPercent, people }
     const { name, value } = currentTarget
+    const finalValue = value === '' ? '' : Number(value)
 
-    values[name] = value
+    values[name] = finalValue
 
     setValues(values)
   }
@@ -96,21 +99,22 @@ export default function TipCalculator() {
           <section id='input-section'>
             <section id='bill-section'>
               <label htmlFor='bill'>Bill</label>
-              {errors.bill && <span>{errors.bill}</span>}
+              {errors.bill && <Error message={errors.bill} />}
               <input
                 id='bill'
                 name='bill'
                 value={bill}
                 onChange={handleChange}
+                className={errors.bill ? 'input-error' : ''}
                 type='number'
                 min='1'
                 required
               />
             </section>
             <section id='select-tip'>
-              <label htmlFor='percent-input-section'>Select Tip %</label>
+              <label htmlFor='percent-input-section'>Tip %</label>
               {errors.customTipPercent && (
-                <span>{errors.customTipPercent}</span>
+                <Error message={errors.customTipPercent} />
               )}
               <section id='percent-input-section'>
                 {[5, 10, 15, 25, 50].map((value) => (
@@ -131,7 +135,7 @@ export default function TipCalculator() {
             </section>
             <section id='people-section'>
               <label htmlFor='people'>Number of People</label>
-              {errors.people && <span>{errors.people}</span>}
+              {errors.people && <Error message={errors.people} />}
               <input
                 id='people'
                 name='people'
