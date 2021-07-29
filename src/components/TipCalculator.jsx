@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react'
 import PercentInput from './PercentInput'
 import Error from './Error'
 import '../styles/TipCalculator.sass'
+import Input from './Input'
 
 const initialValues = {
   bill: 100,
   tipPercent: undefined,
-  customTipPercent: 55,
+  customTipPercent: undefined,
   people: 1,
   tipPerPerson: undefined,
   totalPerPerson: undefined,
@@ -107,16 +108,11 @@ export default function TipCalculator() {
             <section id='bill-section'>
               <label htmlFor='bill'>Bill</label>
               {errors.bill && <Error message={errors.bill} />}
-              <input
-                id='bill'
+              <Input
                 name='bill'
                 value={bill}
                 onChange={handleChange}
-                className={errors.bill ? 'input-error' : ''}
-                type='number'
-                placeholder='0'
-                min='1'
-                required
+                error={errors.bill}
               />
             </section>
             <section id='select-tip'>
@@ -133,30 +129,22 @@ export default function TipCalculator() {
                     selectedTipPercent={tipPercent}
                   />
                 ))}
-                <input
+                <Input
                   name='customTipPercent'
                   value={customTipPercent}
                   onChange={handleChange}
-                  className={errors.customTipPercent ? 'input-error' : ''}
-                  type='number'
-                  placeholder='Custom'
-                  min='0.1'
+                  error={errors.customTipPercent}
                 />
               </section>
             </section>
             <section id='people-section'>
               <label htmlFor='people'>Number of People</label>
               {errors.people && <Error message={errors.people} />}
-              <input
-                id='people'
+              <Input
                 name='people'
                 value={people}
                 onChange={handleChange}
-                className={errors.people ? 'input-error' : ''}
-                type='number'
-                placeholder='0'
-                min='1'
-                required
+                error={errors.people}
               />
             </section>
           </section>
