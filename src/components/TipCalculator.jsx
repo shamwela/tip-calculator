@@ -5,10 +5,10 @@ import '../styles/TipCalculator.sass'
 import Input from './Input'
 
 const initialValues = {
-  bill: 100,
+  bill: '',
   tipPercent: undefined,
-  customTipPercent: undefined,
-  people: 1,
+  customTipPercent: '',
+  people: '',
   tipPerPerson: undefined,
   totalPerPerson: undefined,
 }
@@ -39,7 +39,7 @@ export default function TipCalculator() {
         const inputsToValidate = { bill, customTipPercent, people }
 
         for (const [key, value] of Object.entries(inputsToValidate)) {
-          if (value <= 0) {
+          if ((value !== '') & (value <= 0)) {
             finalErrors[key] = ' should be a positive number'
           } else {
             delete finalErrors[key]
@@ -73,8 +73,13 @@ export default function TipCalculator() {
     }
 
     validate()
-    // If there are no errors, all inputs are valid
-    if (Object.keys(errors).length === 0) {
+    // If 3 inputs are present and has no errors
+    if (
+      bill &&
+      (tipPercent || customTipPercent) &&
+      people &&
+      Object.keys(errors).length === 0
+    ) {
       calculate()
     }
   }, [bill, tipPercent, customTipPercent, people])
@@ -93,9 +98,9 @@ export default function TipCalculator() {
     setValues({ ...initialValues })
   }
 
-  const areInputsEmpty = () => {
+  const areInitialValues = () => {
     const inputs = [bill, tipPercent, customTipPercent, people]
-    return inputs.every((input) => (input ? false : true))
+    return inputs.every((input) => input === '' || input === undefined)
   }
 
   return (
@@ -166,7 +171,7 @@ export default function TipCalculator() {
             </section>
             <button
               onClick={handleReset}
-              disabled={areInputsEmpty()}
+              disabled={areInitialValues()}
               id='reset-button'
             >
               RESET
