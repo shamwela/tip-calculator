@@ -84,12 +84,24 @@ export default function TipCalculator() {
     }
   }, [bill, tipPercent, customTipPercent, people])
 
+  const removeNonPositiveNumber = (value) => {
+    let finalValue
+    // Remove empty string, 0, negative numbers, and "e" character
+    if (value === '' || Number(value) === 0) {
+      finalValue = ''
+    } else if (value < 0) {
+      finalValue = -1 * value
+    } else {
+      finalValue = Number(value.replace('e', ''))
+    }
+    return finalValue
+  }
+
   const handleChange = ({ currentTarget }) => {
     const values = { bill, tipPercent, customTipPercent, people }
     const { name, value } = currentTarget
 
-    const finalValue = value === '' ? '' : Number(value)
-    values[name] = finalValue
+    values[name] = removeNonPositiveNumber(value)
 
     // tipPercent and customTipPercent should not exist at the same time
     if (name === 'tipPercent') {
