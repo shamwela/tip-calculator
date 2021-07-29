@@ -32,57 +32,58 @@ export default function TipCalculator() {
     return Math.round((number + Number.EPSILON) * 100) / 100
   }
 
-  const validate = () => {
-    const finalErrors = { ...errors }
-    const inputsToValidate = { bill, customTipPercent, people }
+  useEffect(() => {
+    const validate = () => {
+      setErrors((previousErrors) => {
+        const finalErrors = { ...previousErrors }
+        const inputsToValidate = { bill, customTipPercent, people }
 
-    for (const [key, value] of Object.entries(inputsToValidate)) {
-      if (value <= 0) {
-        finalErrors[key] = ' should be a positive number'
+        for (const [key, value] of Object.entries(inputsToValidate)) {
+          if (value <= 0) {
+            finalErrors[key] = ' should be a positive number'
+          } else {
+            delete finalErrors[key]
+          }
+        }
+        // If the number of people is not an integer
+        if (people !== '' && !Number.isInteger(people)) {
+          finalErrors.people = ' should be a positive integer'
+        }
+
+        return finalErrors
+      })
+    }
+
+    const calculate = () => {
+      let tipPercentFloat
+      if (customTipPercent) {
+        tipPercentFloat = customTipPercent / 100
       } else {
-        delete finalErrors[key]
+        tipPercentFloat = tipPercent / 100
       }
-    }
-    // If the number of people is not an integer
-    if (people !== '' && !Number.isInteger(people)) {
-      finalErrors.people = ' should be a positive integer'
-    }
+      const totalTip = bill * tipPercentFloat
+      const tipPerPerson = roundToTwoDecimals(totalTip / people)
 
-    setErrors(finalErrors)
+      const total = bill + totalTip
+      const totalPerPerson = roundToTwoDecimals(total / people)
 
-    // If there are no errors, all inputs are valid
-    return Object.keys(finalErrors).length === 0
-  }
-
-  const calculate = () => {
-    let tipPercentFloat
-    if (customTipPercent) {
-      tipPercentFloat = customTipPercent / 100
-    } else {
-      tipPercentFloat = tipPercent / 100
-    }
-    const totalTip = bill * tipPercentFloat
-    const tipPerPerson = roundToTwoDecimals(totalTip / people)
-
-    const total = bill + totalTip
-    const totalPerPerson = roundToTwoDecimals(total / people)
-
-    if (tipPerPerson && totalPerPerson) {
       setValues((previousValues) => {
         return { tipPerPerson, totalPerPerson, ...previousValues }
       })
     }
-  }
 
-  useEffect(() => {
-    if (validate()) calculate()
+    validate()
+    // If there are no errors, all inputs are valid
+    if (Object.keys(errors).length === 0) {
+      calculate()
+    }
   }, [bill, tipPercent, customTipPercent, people])
 
   const handleChange = ({ currentTarget }) => {
     const values = { bill, tipPercent, customTipPercent, people }
     const { name, value } = currentTarget
-    const finalValue = value === '' ? '' : Number(value)
 
+    const finalValue = value === '' ? '' : Number(value)
     values[name] = finalValue
 
     setValues(values)
