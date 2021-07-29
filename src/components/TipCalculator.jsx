@@ -91,6 +91,14 @@ export default function TipCalculator() {
     const finalValue = value === '' ? '' : Number(value)
     values[name] = finalValue
 
+    // tipPercent and customTipPercent should not exist at the same time
+    if (name === 'tipPercent') {
+      values.customTipPercent = ''
+    }
+    if (name === 'customTipPercent') {
+      values.tipPercent = ''
+    }
+
     setValues(values)
   }
 
