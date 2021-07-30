@@ -90,7 +90,7 @@ export default function TipCalculator() {
     if (Number(value) === 0) {
       finalValue = ''
     } else {
-      finalValue = Number(value.replaceAll(/[^0-9]/gi, ''))
+      finalValue = Number(value.replaceAll(/^[0-9]*\.?[0-9]*$/g, ''))
     }
 
     return finalValue
