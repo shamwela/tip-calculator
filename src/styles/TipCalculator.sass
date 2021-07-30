@@ -1,8 +1,8 @@
 @use '_variables' as *
 
 *,
-*:before,
-*:after
+*::before,
+*::after
   box-sizing: border-box
   margin: 0
   padding: 0
@@ -68,16 +68,10 @@ button
   background-color: $darkest-cyan
   color: $white
   &:hover
+  &:focus
+    outline: 0
     background-color: $light-cyan
     color: $darkest-cyan
-  &:focus
-    background-color: $strong-cyan
-    color: $darkest-cyan
-
-// #tip-section
-//   display: grid
-//   grid-template-rows: 2fr 8fr
-//   grid-row-gap: 0.5rem
 
 #percent-tip-section
   display: grid
