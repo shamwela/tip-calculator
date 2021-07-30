@@ -9,8 +9,7 @@ export default function Input({ name, value, onChange, error }) {
       onChange={onChange}
       className={error ? 'input-error' : ''}
       type='number'
-      pattern='^[+]?([.]\d+|\d+[.]?\d*)$' // only positive numbers
-      min='1'
+      min='0'
     />
   )
 }
