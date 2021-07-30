@@ -35,6 +35,7 @@ body
   display: grid
   grid-template: 1fr 3fr 1fr / 1fr
   grid-row-gap: 10px
+  align-items: center
 
 label
   font-weight: 700
@@ -46,10 +47,10 @@ button
   font-size: 1.5rem
   font-weight: 700
   cursor: pointer
+  max-height: 3rem
 
 input
   width: 100%
-  height: 2.5rem
   border: 0
   background-color: $lighter-cyan
   padding: 1rem
@@ -73,7 +74,12 @@ button
     background-color: $strong-cyan
     color: $darkest-cyan
 
-#percent-input-section
+// #tip-section
+//   display: grid
+//   grid-template-rows: 2fr 8fr
+//   grid-row-gap: 0.5rem
+
+#percent-tip-section
   display: grid
   grid-template: repeat(3, 1fr) / repeat(2, 1fr)
   grid-gap: 1rem
@@ -121,7 +127,7 @@ button
     grid-template: 1fr / repeat(2, 1fr)
     grid-column-gap: 2.5rem
 
-  #percent-input-section
+  #percent-tip-section
     grid-template: repeat(2, 1fr) / repeat(3, 1fr)
 
   input,

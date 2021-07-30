@@ -141,12 +141,12 @@ export default function TipCalculator() {
                 error={errors.bill}
               />
             </section>
-            <section id='select-tip'>
-              <label htmlFor='percent-input-section'>Tip %</label>
+            <section id='tip-section'>
+              <label htmlFor='percent-tip-section'>Tip %</label>
               {errors.customTipPercent && (
                 <Error message={errors.customTipPercent} />
               )}
-              <section id='percent-input-section'>
+              <section id='percent-tip-section'>
                 {[5, 10, 15, 25, 50].map((value) => (
                   <PercentInput
                     key={value}
