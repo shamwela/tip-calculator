@@ -133,12 +133,15 @@ export default function TipCalculator() {
             <section id='bill-section'>
               <label htmlFor='bill'>Bill</label>
               {errors.bill && <Error message={errors.bill} />}
-              <Input
-                name='bill'
-                value={bill}
-                onChange={handleChange}
-                error={errors.bill}
-              />
+              <div className='input-wrapper'>
+                <Input
+                  name='bill'
+                  value={bill}
+                  onChange={handleChange}
+                  error={errors.bill}
+                />
+                <img className='icon' src='./dollar.svg' alt='Dollar icon' />
+              </div>
             </section>
             <section id='tip-section'>
               <label htmlFor='percent-tip-section'>Tip %</label>
@@ -165,12 +168,15 @@ export default function TipCalculator() {
             <section id='people-section'>
               <label htmlFor='people'>Number of People</label>
               {errors.people && <Error message={errors.people} />}
-              <Input
-                name='people'
-                value={people}
-                onChange={handleChange}
-                error={errors.people}
-              />
+              <div className='input-wrapper'>
+                <Input
+                  name='people'
+                  value={people}
+                  onChange={handleChange}
+                  error={errors.people}
+                />
+                <img className='icon' src='./person.svg' alt='Person icon' />
+              </div>
             </section>
           </section>
           <section id='output-section'>

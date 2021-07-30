@@ -53,10 +53,20 @@ input
   width: 100%
   border: 0
   background-color: $lighter-cyan
-  padding: 1rem
+  padding: 1rem // this should be the same as the icon's left inset to look nice
   text-align: right
   &:focus
     outline: 2px solid $strong-cyan
+
+.input-wrapper
+  position: relative
+
+.icon
+  position: absolute
+  margin: auto
+  top: 0
+  bottom: 0
+  left: 1rem // this should be the same as the input's padding to look nice
 
 .input-error,
 .input-error:focus
@@ -132,6 +142,6 @@ button
     display: flex
     flex-direction: column
     justify-content: space-between
-  
+
   .output-value
     font-size: 2.5rem
