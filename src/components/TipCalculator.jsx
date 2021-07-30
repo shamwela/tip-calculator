@@ -90,7 +90,8 @@ export default function TipCalculator() {
     if (Number(value) === 0) {
       finalValue = ''
     } else {
-      finalValue = Number(value.replaceAll(/^[0-9]*\.?[0-9]*$/g, ''))
+      // Allow only number characters and dot character (.)
+      finalValue = Number(value.replaceAll(/[^0-9.]/g, ''))
     }
 
     return finalValue
