@@ -16,6 +16,7 @@ export default function PercentInput({ value, onClick, selectedTipPercent }) {
 }
 
 PercentInput.propTypes = {
-  value: PropTypes.number.isRequired,
+  value: PropTypes.any.isRequired,
   onClick: PropTypes.func.isRequired,
+  selectedTipPercent: PropTypes.any,
 }

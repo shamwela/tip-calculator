@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export default function Input({ name, value, onChange, error }) {
   return (
@@ -13,4 +14,11 @@ export default function Input({ name, value, onChange, error }) {
       min='0'
     />
   )
+}
+
+Input.propTypes = {
+  name: PropTypes.string.isRequired,
+  value: PropTypes.any.isRequired,
+  onChange: PropTypes.func.isRequired,
+  error: PropTypes.string,
 }
