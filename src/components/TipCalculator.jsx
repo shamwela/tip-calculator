@@ -126,7 +126,7 @@ export default function TipCalculator() {
     <main>
       <article id='container'>
         <section id='logo-section'>
-          <img id='logo' src='./logo.svg' alt='Logo' />
+          <img id='logo' src='./logo.svg' alt='Logo' width='85' height='55' />
         </section>
         <section id='tip-calculator'>
           <section id='input-section'>
