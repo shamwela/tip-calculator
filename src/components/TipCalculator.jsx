@@ -9,8 +9,8 @@ const initialValues = {
   tipPercent: undefined,
   customTipPercent: '',
   people: '',
-  tipPerPerson: undefined,
-  totalPerPerson: undefined,
+  tipPerPerson: 0,
+  totalPerPerson: 0,
 }
 
 export default function TipCalculator() {

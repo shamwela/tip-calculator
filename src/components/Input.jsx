@@ -7,7 +7,8 @@ export default function Input({ name, value, onChange, error }) {
       name={name}
       value={value}
       onChange={onChange}
-      className={error ? 'input-error' : ''}
+      className={error ? 'input-error' : null}
+      placeholder={name === 'customTipPercent' ? 'Custom' : '0'}
       type='number'
       min='0'
     />
