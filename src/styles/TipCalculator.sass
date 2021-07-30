@@ -68,8 +68,6 @@ button
   background-color: $darkest-cyan
   color: $white
   &:hover
-  &:focus
-    outline: 0
     background-color: $light-cyan
     color: $darkest-cyan
 
@@ -89,6 +87,7 @@ button
 .output
   display: flex
   justify-content: space-between
+  align-items: center
 
 .output > *
   color: $white
@@ -127,3 +126,12 @@ button
   input,
   button
     font-size: 1.2rem
+
+  #output-section
+    padding: 2rem
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+  
+  .output-value
+    font-size: 2.5rem
