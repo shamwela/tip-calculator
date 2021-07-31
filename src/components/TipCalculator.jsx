@@ -36,7 +36,7 @@ export default function TipCalculator() {
     const validate = () => {
       setErrors((previousErrors) => {
         const finalErrors = { ...previousErrors }
-        const inputsToValidate = { bill, customTipPercent, people } // these inputs will be strings
+        const inputsToValidate = { bill, customTipPercent, people } // These inputs will be strings
 
         for (const [key, value] of Object.entries(inputsToValidate)) {
           if (/[^0-9.]/g.test(Number(value))) {
@@ -56,16 +56,18 @@ export default function TipCalculator() {
     }
 
     const calculate = () => {
+      // State values are string, so they should be converted to numbers
+
       let tipPercentFloat
       if (customTipPercent) {
-        tipPercentFloat = customTipPercent / 100
+        tipPercentFloat = Number(customTipPercent) / 100
       } else {
-        tipPercentFloat = tipPercent / 100
+        tipPercentFloat = Number(tipPercent) / 100
       }
-      const totalTip = bill * tipPercentFloat
+      const totalTip = Number(bill) * tipPercentFloat
       const tipPerPerson = roundToTwoDecimals(totalTip / people)
 
-      const total = bill + totalTip
+      const total = Number(bill) + totalTip
       const totalPerPerson = roundToTwoDecimals(total / people)
 
       setValues((previousValues) => {
