@@ -76,7 +76,7 @@ export default function TipCalculator() {
     }
 
     validate()
-    // If 3 inputs are present and has no errors
+    // If 3 inputs are present and they have no errors
     if (
       bill &&
       (tipPercent || customTipPercent) &&
