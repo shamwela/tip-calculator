@@ -100,16 +100,12 @@ export default function TipCalculator() {
       // e.g. "1." should be stored as just that
     }
 
-    console.log('finalValue', finalValue)
     return finalValue
   }
 
   const handleChange = ({ currentTarget }) => {
-    console.log('handleChange is called.')
-
     const values = { bill, tipPercent, customTipPercent, people }
     const { name, value } = currentTarget
-    console.log('value', value)
     values[name] = allowOnlyPositiveNumber(value)
 
     // tipPercent and customTipPercent both should not exist at the same time
