@@ -18,7 +18,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
+- Solution URL: [https://www.frontendmentor.io/solutions/react-jsx-javascript-and-sass-fVf9lh6G2](https://www.frontendmentor.io/solutions/react-jsx-javascript-and-sass-fVf9lh6G2)
 - Live Site URL: [https://shamwela-tip-calculator.netlify.app](https://shamwela-tip-calculator.netlify.app)
 
 ## My process
