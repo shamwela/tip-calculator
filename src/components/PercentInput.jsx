@@ -8,7 +8,7 @@ export default function PercentInput({ value, onClick, selectedTipPercent }) {
       name={'tipPercent'}
       value={value}
       onClick={onClick}
-      className={selectedTipPercent === value ? styles.selected : null}
+      className={Number(selectedTipPercent) === value ? styles.selected : null}
     >
       {value}%
     </button>

@@ -36,17 +36,18 @@ export default function TipCalculator() {
     const validate = () => {
       setErrors((previousErrors) => {
         const finalErrors = { ...previousErrors }
-        const inputsToValidate = { bill, customTipPercent, people }
+        const inputsToValidate = { bill, customTipPercent, people } // these inputs will be strings
 
         for (const [key, value] of Object.entries(inputsToValidate)) {
-          if ((value !== '') & (value <= 0)) {
+          if (/[^0-9.]/g.test(Number(value))) {
             finalErrors[key] = ' should be a positive number'
           } else {
             delete finalErrors[key]
           }
         }
+
         // If the number of people is not an integer
-        if (people !== '' && !Number.isInteger(people)) {
+        if (people !== '' && !Number.isInteger(Number(people))) {
           finalErrors.people = ' should be a positive integer'
         }
 
@@ -87,19 +88,26 @@ export default function TipCalculator() {
   const allowOnlyPositiveNumber = (value) => {
     let finalValue
 
+    // If the value is a single zero (0), remove it
     if (Number(value) === 0) {
       finalValue = ''
     } else {
-      // Allow only number characters and dot character (.)
-      finalValue = Number(value.replaceAll(/[^0-9.]/g, ''))
+      // Allow only number characters and the dot character (.)
+      finalValue = value.replaceAll(/[^0-9.]/g, '')
+      // Should be stored as a string to accept the dot character (.)
+      // e.g. "1." should be stored as just that
     }
 
+    console.log('finalValue', finalValue)
     return finalValue
   }
 
   const handleChange = ({ currentTarget }) => {
+    console.log('handleChange is called.')
+
     const values = { bill, tipPercent, customTipPercent, people }
     const { name, value } = currentTarget
+    console.log('value', value)
     values[name] = allowOnlyPositiveNumber(value)
 
     // tipPercent and customTipPercent both should not exist at the same time
