@@ -10,8 +10,8 @@ export default function Input({ name, value, onChange, error }) {
       onChange={onChange}
       className={error ? 'input-error' : null}
       placeholder={name === 'customTipPercent' ? 'Custom' : '0'}
-      type='tel'
-      // use "tel" input instead of "number" because "number" doesn't fire onChange event if the input is wrong
+      type='text'
+      // use "text" input instead of "number" because "number" doesn't fire onChange event if the input is wrong
     />
   )
 }
