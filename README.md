@@ -30,7 +30,7 @@ Users should be able to:
 
 ### What I learned
 
-I had to use "tel" input instead of "number" because "number" doesn't fire onChange event if the input is wrong
+I had to use "text" input instead of "number" because "number" doesn't fire onChange event if the input is wrong
 
 ### Continued development
 
