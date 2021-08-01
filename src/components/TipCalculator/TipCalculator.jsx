@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import PercentInput from './PercentInput'
-import Error from './Error'
-import '../styles/TipCalculator.sass'
-import Input from './Input'
+import Error from '../Error/Error'
+import Input from '../Input/Input'
+import PercentInput from '../PercentInput/PercentInput'
+import './TipCalculator.sass'
 
 const initialValues = {
   bill: '',

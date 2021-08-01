@@ -1,4 +1,5 @@
-@use '_variables' as *
+@use '../../styles/variables' as *
+@use '../../styles/util'
 
 *,
 *::before,
@@ -115,7 +116,7 @@ button
     background-color: $darker-cyan
     color: $dark-cyan
 
-@media #{$mq-1440-up}
+@include util.breakpoint(large)
   main
     width: 100%
     height: 100vh

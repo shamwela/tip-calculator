@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styles from '../styles/PercentInput.module.sass'
+import styles from './PercentInput.module.sass'
 
 export default function PercentInput({ value, onClick, selectedTipPercent }) {
   return (
