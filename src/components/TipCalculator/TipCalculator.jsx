@@ -3,6 +3,9 @@ import Error from '../Error/Error'
 import Input from '../Input/Input'
 import PercentInput from '../PercentInput/PercentInput'
 import './TipCalculator.sass'
+import logo from '../../assets/logo.svg'
+import dollar from '../../assets/dollar.svg'
+import person from '../../assets/person.svg'
 
 const initialValues = {
   bill: '',
@@ -132,7 +135,7 @@ export default function TipCalculator() {
     <main>
       <article id='container'>
         <section id='logo-section'>
-          <img id='logo' src='./logo.svg' alt='Logo' width='85' height='55' />
+          <img id='logo' src={logo} alt='Logo' width='85' height='55' />
         </section>
         <section id='tip-calculator'>
           <section id='input-section'>
@@ -146,7 +149,7 @@ export default function TipCalculator() {
                   onChange={handleChange}
                   error={errors.bill}
                 />
-                <img className='icon' src='./dollar.svg' alt='Dollar icon' />
+                <img className='icon' src={dollar} alt='Dollar icon' />
               </div>
             </section>
             <section id='tip-section'>
@@ -181,7 +184,7 @@ export default function TipCalculator() {
                   onChange={handleChange}
                   error={errors.people}
                 />
-                <img className='icon' src='./person.svg' alt='Person icon' />
+                <img className='icon' src={person} alt='Person icon' />
               </div>
             </section>
           </section>
