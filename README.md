@@ -25,8 +25,8 @@ Users should be able to:
 
 ### Built with
 
-- React (JSX, JavaScript)
-- Sass (Grid, Flexbox, Mobile-first)
+- React (JavaScript)
+- Sass
 
 ### What I learned
 
