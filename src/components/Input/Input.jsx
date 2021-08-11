@@ -18,7 +18,7 @@ export default function Input({ name, value, onChange, error }) {
 
 Input.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.any.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   onChange: PropTypes.func.isRequired,
   error: PropTypes.string,
 }
